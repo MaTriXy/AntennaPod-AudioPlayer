@@ -82,8 +82,8 @@ public class SonicAudioPlayer extends AbstractAudioPlayer {
     private boolean mDownMix;
 
 
-    SonicAudioPlayer(MediaPlayer owningMediaPlayer, Context context) {
-        super(owningMediaPlayer, context);
+    SonicAudioPlayer(MediaPlayer owningMediaPlayer, Context context, String userAgent) {
+        super(owningMediaPlayer, context, userAgent);
         mCurrentSpeed = 1.0f;
         mCurrentPitch = 1.0f;
         mContinue = false;
@@ -499,9 +499,9 @@ public class SonicAudioPlayer extends AbstractAudioPlayer {
             mExtractor = new MediaExtractor();
 
             if (mPath != null) {
-                mExtractor.setDataSource(mPath);
+                mExtractor.setDataSource(mPath, getHeaders());
             } else if (mUri != null) {
-                mExtractor.setDataSource(mContext, mUri, null);
+                mExtractor.setDataSource(mContext, mUri, getHeaders());
             } else {
                 throw new IOException("Neither path nor uri set");
             }
